@@ -9,11 +9,13 @@
     "Developer Tools"
   ],
   "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
   "commands": [
     {
       "name": "manage-sessions",
-      "title": "Claude Sessions",
-      "subtitle": "Claude Sessions",
+      "title": "Search Sessions",
       "description": "Search, pin, and resume Claude Code sessions",
       "mode": "view",
       "preferences": [
