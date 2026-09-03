@@ -37,11 +37,19 @@ export default function SessionDetail({
   onTogglePin: () => void;
 }) {
   const { data: exchange, isLoading } = usePromise(
-    () => getLastExchange(session.id, session.filePath, session.mtimeMs),
+    () =>
+      session.mockExchange
+        ? Promise.resolve(session.mockExchange)
+        : getLastExchange(session.id, session.filePath, session.mtimeMs),
     [],
   );
 
   async function resume() {
+    if (session.mockExchange) {
+      await showToast({ style: Toast.Style.Failure, title: "This is a demo session — nothing to resume" });
+      return;
+    }
+
     await showToast({ style: Toast.Style.Animated, title: "Opening terminal…" });
     try {
       const result = await resumeSessionInTerminal(session.cwd, session.id);

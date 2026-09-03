@@ -44,6 +44,8 @@
   },
   "scripts": {
     "build": "ray build -e dist",
+    "demo:on": "touch ~/.claude-sessions-demo",
+    "demo:off": "rm -f ~/.claude-sessions-demo",
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
