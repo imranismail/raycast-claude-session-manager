@@ -14,8 +14,8 @@
   ],
   "commands": [
     {
-      "name": "manage-sessions",
-      "title": "Search Sessions",
+      "name": "manage-claude-sessions",
+      "title": "Manage Claude Sessions",
       "description": "Search, pin, and resume Claude Code sessions",
       "mode": "view",
       "preferences": [
