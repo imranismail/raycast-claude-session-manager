@@ -67,10 +67,13 @@ export async function resumeSessionInTerminal(cwd: string, sessionId: string): P
       // Ghostty 1.3+ has its own AppleScript dictionary (new window / input text / send key),
       // scoped to the window it creates — unlike System Events keystrokes, this can't land in
       // an unrelated, already-focused app.
+      //
+      // Note: `set initial working directory of cfg to ...` after `new surface configuration`
+      // silently no-ops (Ghostty ignores the mutation) — the working directory has to be set via
+      // a record literal instead, so it's baked into `cfg` from the start.
       await runAppleScript(`
         tell application "Ghostty"
-          set cfg to new surface configuration
-          set initial working directory of cfg to (POSIX file "${escapeForAppleScript(cwd)}")
+          set cfg to {initial working directory:"${escapeForAppleScript(cwd)}"}
           set win to new window with configuration cfg
           set term to focused terminal of selected tab of win
           input text "${escapeForAppleScript(`claude --resume ${sessionId}`)}" to term
