@@ -4,9 +4,9 @@ Search, pin, and resume your [Claude Code](https://claude.com/claude-code) sessi
 
 ## Screenshots
 
-| Search | Discover | Resume |
-| --- | --- | --- |
-| ![Search Claude Sessions list](metadata/claude-session-manager-1.png) | ![Search Claude Sessions in Raycast root search](metadata/claude-session-manager-2.png) | ![Session detail with resume action](metadata/claude-session-manager-3.png) |
+| Search | Resume |
+| --- | --- |
+| ![Search Claude Sessions list](metadata/claude-session-manager-1.png) | ![Session detail with resume action](metadata/claude-session-manager-2.png) |
 
 ## Requirements
 
