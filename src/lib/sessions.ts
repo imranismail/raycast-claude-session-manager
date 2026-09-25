@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, statSync } from "fs";
+import { closeSync, existsSync, openSync, readdirSync, readSync, statSync } from "fs";
 import { homedir } from "os";
 import { join } from "path";
 
@@ -96,8 +96,23 @@ function formatTitle(aiTitle: string): string {
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
+// cwd/ai-title metadata lands in the first few lines; session transcripts can run into the
+// tens of MB, so reading only a bounded head avoids blowing the command's heap limit.
+const META_READ_BYTES = 256 * 1024;
+
+function readHead(filePath: string): string {
+  const fd = openSync(filePath, "r");
+  try {
+    const buffer = new Uint8Array(META_READ_BYTES);
+    const bytesRead = readSync(fd, buffer, 0, META_READ_BYTES, 0);
+    return Buffer.from(buffer.buffer, 0, bytesRead).toString("utf-8");
+  } finally {
+    closeSync(fd);
+  }
+}
+
 function parseSessionMeta(filePath: string): { cwd: string; gitBranch: string | null; title: string | null } | null {
-  const lines = readFileSync(filePath, "utf-8").split("\n");
+  const lines = readHead(filePath).split("\n");
 
   let cwd: string | null = null;
   let gitBranch: string | null = null;
